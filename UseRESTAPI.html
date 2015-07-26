@@ -39,8 +39,6 @@
                     
                     var accountName = $('#name').val();
                     if(accountName!= ''){
-                    //replace the below url with your domain name or login.salesforce.com
-                        var requestUrl = 'https://myserviceprovider-dev-ed.my.salesforce.com/services/data/v20.0/sobjects/Account/';
                         //create a javascript object with the account field values
                         var accountInfo = {
                             "Name" :accountName
@@ -50,7 +48,8 @@
                         //send POST with ajax
                         $.ajax({
                             type: 'POST',
-                            url : requestUrl,
+                            //replace this with your domain name or login.salesforce.com
+                            url : 'https://myserviceprovider-dev-ed.my.salesforce.com/services/data/v20.0/sobjects/Account/',
                             //add the authorization header including the access_token
                             headers : {
                                 'Authorization' : 'Bearer '+accessToken,
