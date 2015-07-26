@@ -1,0 +1,98 @@
+<html>
+    <body>
+        <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        </head>
+        <h3>REST API With Javascript</h3>
+        <h4>Create Account Record</h4>
+        <label for="name">Account Name</label>
+        <input type="text" name="Name" id="name">
+        <br><br>
+        <button id="button">Submit</button>
+        <div id="status"></div>
+        <script type="text/javascript">
+        
+            $(document).ready(function(){
+                
+                /*Get access token. Because the access token is a URL parameter it needs to be decoded*/
+                var accessToken = decodeURI(GetURLParameter('access_token'));
+                console.log(accessToken);
+                
+                    /*Use this function to get the access token from the URL*/
+                function GetURLParameter(sParam)
+                {
+                    var mainURL = document.location+'';
+                    var pageUrls = mainURL.split('#');
+                    var sURLVariables = pageUrls[1].split('&');
+                    for (var i = 0; i < sURLVariables.length; i++) 
+                    {
+                        var sParameterName = sURLVariables[i].split('=');
+                        if (sParameterName[0] == sParam) 
+                        {
+                            return sParameterName[1];
+                        }
+                    }
+                }
+                
+                //Create Account Record button click
+                $('#button').click(function(){
+                    
+                    var accountName = $('#name').val();
+                    if(accountName!= ''){
+                    //replace the below url with your domain name or login.salesforce.com
+                        var requestUrl = 'https://myserviceprovider-dev-ed.my.salesforce.com/services/data/v20.0/sobjects/Account/';
+                        //create a javascript object with the account field values
+                        var accountInfo = {
+                            "Name" :accountName
+                        }
+                        //convert the object to a JSON string
+                        var accountInfoJson = JSON.stringify(accountInfo);
+                        //send POST with ajax
+                        $.ajax({
+                            type: 'POST',
+                            url : requestUrl,
+                            //add the authorization header including the access_token
+                            headers : {
+                                'Authorization' : 'Bearer '+accessToken,
+                                'Content-Type' : 'application/json'
+                            },
+                            data : accountInfoJson,
+                            success : function(response){
+                                displayAccountInfo(response);
+                            },
+                            error: function(response){
+                                displayError(response);
+                            }
+                        });
+
+                    }else{
+                        alert('Please specify name');
+                    }
+                
+                })
+                
+                /*If account is successfully created*/
+                function displayAccountInfo(responseObject){
+                    var statusMessage = '<p>Success! Your account has been created, click on the link below.</p>';
+                    $('#status').append(statusMessage);
+                    $('<a>',{
+                            text: 'https://myserviceprovider-dev-ed.my.salesforce.com/'+responseObject.id,
+                            href: 'https://myserviceprovider-dev-ed.my.salesforce.com/'+responseObject.id,
+                            target : '_blank'
+                        }).appendTo($('#status'));
+                }
+                
+                /*If an error message occurred*/
+                function displayError(responseObject){
+                    var responseJson = responseObject.responseJSON;
+                    var statusMessage = '<p>A problem has occurred, please contact your administrator</p>';
+                    $('#status').append(statusMessage);
+                    $('<p>',{
+                        text : responseJson[0].errorCode+": "+responseJson[0].message
+                    }).appendTo($('#status'));
+    
+                }
+            })
+        </script>
+    </body>
+</html>
