@@ -1,0 +1,5 @@
+<aura:component >
+    <aura:attribute type="String" name="FirstName"/>
+    <aura:attribute Type="Integer" name="year"/>
+    {!v.FirstName} - {!v.year}
+</aura:component>
