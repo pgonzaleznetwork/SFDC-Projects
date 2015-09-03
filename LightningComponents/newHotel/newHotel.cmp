@@ -1,0 +1,48 @@
+<aura:component controller="HotelReviewerClass">
+    <ltng:require styles="/resource/bootstrap"/>
+    <aura:attribute name="newHotel" type="Hotel__c" default="{
+                             'sobjectType':'Hotel__c',
+                             'Name':'',                               
+                             'website__c' : '',
+                             'Phone__c' : '',
+                             'Visit_Date__c':''
+                             }"/>
+    <aura:attribute name="hotelCreatedSuccess" type="Boolean" default="false"/>
+    <aura:attribute name="hotelCreatedFail" type="Boolean" default="false"/>
+<!-- Input Form using components -->
+  <div class="bootstrap-sf1">	
+        <div class="container">
+            <form>
+                <fieldset>
+                    <ui:inputText label="Hotel Name"
+                                  class="form-control" 
+                                  value="{!v.newHotel.Name}"
+                                  placeholder="Hotel Name" required="true"/>
+                    <ui:inputNumber label="Phone" 
+                                    class="form-control"
+                                    value="{!v.newHotel.Phone__c}"
+                                    />
+                    <ui:inputText label="Website" 
+                                  class="form-control"
+                                  value="{!v.newHotel.website__c}"
+                                  />
+                    <ui:inputDateTime label="Visit Date" 
+                                      class="form-control"
+                                      value="{!v.newHotel.Visit_Date__c}"
+                                      displayDatePicker="true"/>
+                    <ui:button label="Submit" press="{!c.submitHotel}"/>
+                </fieldset>
+            </form>
+     <aura:renderIf isTrue="{!v.hotelCreatedSuccess}">
+        <ui:message title="Success" severity="confirm">
+            Hotel Review successfully created
+        </ui:message>
+    </aura:renderIf>
+     <aura:renderIf isTrue="{!v.hotelCreatedFail}">
+        <ui:message title="Error" severity="error">
+            An error has occurred. Contact IT help desk
+        </ui:message>
+    </aura:renderIf>
+   </div><!-- ./container-->
+    </div>
+</aura:component>
