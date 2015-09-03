@@ -1,0 +1,14 @@
+<aura:component >
+  <aura:attribute name="hotel" type="Hotel__c"/>
+    <div class="alert alert-success">
+      <p>Hotel Name: 
+          <ui:outputText value="{!v.hotel.Name}"/>
+      </p>
+      <p>Website: 
+          <ui:outputText value="{!v.hotel.Website__c}"/>
+      </p>
+      <p>Visit Date: 
+          <ui:outputDateTime value="{!v.hotel.Visit_Date__c}" />
+      </p>
+  </div>
+</aura:component>
