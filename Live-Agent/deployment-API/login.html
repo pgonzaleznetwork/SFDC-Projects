@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    </head>
+        <body>
+        <h3>Login Page</h3>
+        <label for="email">Email Address</label>
+        <input type="text" id="email"/>
+        <br><br>
+        <label for="password">Password</label>
+        <input type="password" id="password"/>
+        <br><br>
+        <button id="b">Log In</button>
+        <script type="text/javascript">
+            $('#b').click(function(){
+                var email = $('#email').val();
+                localStorage.setItem('liveAgentEmail',email);
+                var url = 'your_page_hosting_the_button_code';
+                window.location = url;
+            })
+        </script>
+        </body>
+    </head>
+</html>
